@@ -78,7 +78,6 @@ public class StudentRunner {
         Student student = new UndergraduateStudent(id, name, email, phoneNumber, major);
         enrollmentObj.addStudent(student);
         System.out.println("Student added successfully.");
-//        System.out.println(enrollmentObj.listOfStudents);
 
     }
 
@@ -96,7 +95,6 @@ public class StudentRunner {
         Course course = new MandatoryCourse(id, name, credit, grade);
         enrollmentObj.addCourse(course);
         System.out.println("Course added successfully.");
-//        System.out.println(enrollmentObj.listOfCourses);
 
     }
 

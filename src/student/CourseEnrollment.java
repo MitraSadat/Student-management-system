@@ -26,10 +26,7 @@ public class CourseEnrollment {
     public void enrollStudentInCourse(int studentId, int courseId) {
 
         Student student = studentMap.get(studentId);
-//        System.out.println(studentMap.get(studentId));
-//        System.out.println(student);
         Course course = courseMap.get(courseId);
-//        System.out.println(studentMap.get(courseId));
 
         if (student != null && course != null) {
             student.enrollmentCourses.add(course);
@@ -63,7 +60,6 @@ public class CourseEnrollment {
     }
 
     public  void displayAllStudents() {
-//        System.out.println(studentMap);
         if (studentMap.isEmpty()) {
             System.out.println("No students available.");
             return;
