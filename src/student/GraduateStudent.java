@@ -4,7 +4,7 @@ public class GraduateStudent extends Student{
 
     String graduateDate;
 
-    GraduateStudent(int id, String name, String email, int phoneNumber, String graduateDate) {
+    GraduateStudent(int id, String name, String email, long phoneNumber, String graduateDate) {
         super(id, name, email, phoneNumber);
         this.graduateDate = graduateDate;
 
@@ -12,6 +12,8 @@ public class GraduateStudent extends Student{
 
     @Override
     public String toString() {
-        return super.toString();
+        return super.toString() +
+                ", Graduation Date : " + graduateDate ;
+
     }
 }

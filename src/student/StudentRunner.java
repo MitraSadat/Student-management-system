@@ -1,5 +1,10 @@
 package student;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class StudentRunner {
@@ -8,6 +13,8 @@ public class StudentRunner {
     static CourseEnrollment enrollmentObj = new CourseEnrollment();
 
     public static void main(String[] args) {
+
+        String fileName = "student.txt";
 
         int choice;
 
@@ -38,6 +45,12 @@ public class StudentRunner {
                 case 7:
                     calculateStudentGPA();
                     break;
+                case 8:
+                    searchStudentsById();
+                    break;
+                case 9:
+                    searchCoursesById();
+                    break;
                 case 0:
                     System.out.println("Exiting the system. Goodbye!");
                     break;
@@ -58,6 +71,8 @@ public class StudentRunner {
         System.out.println("5. List Of Students");
         System.out.println("6. List of Courses");
         System.out.println("7. Calculate Student GPA");
+        System.out.println("8. Search Student By Id");
+        System.out.println("9. Search Course By Id");
         System.out.println("0. Exit");
         System.out.print("Enter your choice: ");
     }
@@ -67,18 +82,17 @@ public class StudentRunner {
         System.out.print("Enter Student Id: ");
         int id = input.nextInt();
         System.out.print("Enter Student Name: ");
-        String name = input.nextLine();
+        String name = input.next();
         System.out.print("Enter Student Email: ");
-        String email = input.nextLine();
+        String email = input.next();
         System.out.print("Enter Student Phone Number: ");
-        int phoneNumber = input.nextInt();
+        long phoneNumber = input.nextLong();
         System.out.print("Enter Student Major: ");
-        String major = input.nextLine();
+        String major = input.next();
 
         Student student = new UndergraduateStudent(id, name, email, phoneNumber, major);
         enrollmentObj.addStudent(student);
         System.out.println("Student added successfully.");
-//        System.out.println(enrollmentObj.listOfStudents);
 
     }
 
@@ -87,7 +101,7 @@ public class StudentRunner {
         System.out.print("Enter Course Id: ");
         int id = input.nextInt();
         System.out.print("Enter Course Name: ");
-        String name = input.nextLine();
+        String name = input.next();
         System.out.print("Enter Course Credit: ");
         double credit = input.nextDouble();
         System.out.print("Enter Course Grade: ");
@@ -96,7 +110,6 @@ public class StudentRunner {
         Course course = new MandatoryCourse(id, name, credit, grade);
         enrollmentObj.addCourse(course);
         System.out.println("Course added successfully.");
-//        System.out.println(enrollmentObj.listOfCourses);
 
     }
 
@@ -120,7 +133,66 @@ public class StudentRunner {
     }
 
 
-    public static void calculateStudentGPA(){
+    public static void calculateStudentGPA() {
+
+        System.out.print("Enter student ID: ");
+        int studentId = input.nextInt();
+        Student student = enrollmentObj.studentMap.get(studentId);
+        if (student != null) {
+            System.out.println( student.calculateGPA()); // Call the calculateGPA method
+
+        } else {
+            System.out.println("Invalid student ID.");
+            System.out.println("0.0");
+        }
+    }
+
+    public static void writeStudentInfoInFile(String fileName){
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
+            writer.write("Students:\n");
+            for(Student student : enrollmentObj.studentMap.values()){
+                writer.newLine();
+                writer.write(student.toString());
+            }
+            writer.write("\nCourses:\n");
+            for (Course course : enrollmentObj.courseMap.values()) {
+                writer.write(course.toString() + "\n");
+            }
+            System.out.println("Done");
+            writer.close();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
     }
+
+    public static List<Student> searchStudentsById() {
+        System.out.println("Enter Student Id: ");
+        int id = input.nextInt();
+        List<Student> foundStudents = new ArrayList<>();
+        for (Student student : enrollmentObj.studentMap.values()) {
+            if (student.id == id) {
+                foundStudents.add(student);
+            }
+        }
+        System.out.println(foundStudents);
+        return foundStudents;
+    }
+
+    public static List<Course> searchCoursesById() {
+        System.out.println("Enter Course Id: ");
+        int id = input.nextInt();
+        List<Course> foundCourses = new ArrayList<>();
+        for (Course course : enrollmentObj.courseMap.values()) {
+            if (course.courseId == id) {
+                foundCourses.add(course);
+            }
+        }
+        System.out.println(foundCourses);
+        return foundCourses;
+    }
+
 }

@@ -9,10 +9,10 @@ public class Student {
     int id;
     String name;
     String email;
-    int phoneNumber;
+    long phoneNumber;
     List<Course> enrollmentCourses;
 
-    Student(int id, String name, String email, int phoneNumber){
+    Student(int id, String name, String email, long phoneNumber){
         this.id = id;
         this.name = name;
         this.email = email;
@@ -22,13 +22,11 @@ public class Student {
 
         @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", enrollmentCourses=" + enrollmentCourses +
-                '}';
+        return "Id : " + id +
+                ", Name : " + name  +
+                ", Email : " + email  +
+                ", Phone Number : " + phoneNumber +
+                ", Enrolled Courses=" + enrollmentCourses.toString();
     }
 
     public void enrollCourse(Course course) {
@@ -37,7 +35,32 @@ public class Student {
         }
     }
 
-    public void removeCourse(Course course) {
-        enrollmentCourses.remove(course);
+
+    public double calculateGPA() {
+        double totalPoints = 0.0;
+        double totalCredits = 0.0;
+
+        for (Course course : enrollmentCourses) {
+            totalCredits += course.credits;
+            totalPoints += convertGradeToPoints(course.grade) *  course.credits;
+        }
+        return totalCredits > 0 ? totalPoints / totalCredits : 0.0;
+    }
+
+    private double convertGradeToPoints(char grade) {
+        switch (grade) {
+            case 'A':
+                return 4.0;
+            case 'B':
+                return 3.0;
+            case 'C':
+                return 2.0;
+            case 'D':
+                return 1.0;
+            case 'F':
+                return 0.0;
+            default:
+                return 0.0;
+        }
     }
 }

@@ -1,6 +1,7 @@
 package student;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
@@ -17,16 +18,16 @@ public class Course {
         this.courseName = courseName;
         this.credits = credits;
         this.grade = grade;
+        List <Student> listOfStudents = new ArrayList<>();
     }
 
     @Override
     public String toString() {
-        return "Course{" +
-                "courseId=" + courseId +
-                ", courseName='" + courseName + '\'' +
-                ", credits=" + credits +
-                ", grade=" + grade +
-                '}';
+        return  "Course Id : " + courseId +
+                ", Course Name : " + courseName +
+                ", Credits : " + credits +
+                ", Grade : " + grade +
+                ", List Of Students : " + listOfStudents;
     }
 
     public void addStudent(Student student){
@@ -36,15 +37,6 @@ public class Course {
         }else{
             listOfStudents.add(student);
             System.out.println("Student added to the " + courseName + " Course");
-        }
-    }
-
-    public void removeStudent(Student student) {
-        if (listOfStudents.remove(student)) {
-//            student.removeCourse(this);
-            System.out.println("Successfully removed " + student.name + " from " + courseName);
-        } else {
-            System.out.println("Student not found in this course.");
         }
     }
 

@@ -26,10 +26,7 @@ public class CourseEnrollment {
     public void enrollStudentInCourse(int studentId, int courseId) {
 
         Student student = studentMap.get(studentId);
-//        System.out.println(studentMap.get(studentId));
-//        System.out.println(student);
         Course course = courseMap.get(courseId);
-//        System.out.println(studentMap.get(courseId));
 
         if (student != null && course != null) {
             student.enrollmentCourses.add(course);
@@ -47,23 +44,31 @@ public class CourseEnrollment {
 
     public void removeStudentFromCourse(int studentId, int courseId) {
 
+        System.out.println("Method called");
+
         Student student = studentMap.get(studentId);
+        System.out.println(student);
         Course course = courseMap.get(courseId);
+        System.out.println(course);
 
         if (student != null && course != null) {
-            course.removeStudent(student);
+            if (listOfStudents.remove(student)) {
+                student.enrollmentCourses.remove(course);
+                System.out.println("Successfully removed " + student.name + " from " + course.courseName);
+            }
         } else {
             if (student == null) {
                 System.out.println("Error: Student with ID " + studentId + " does not exist.");
             }
             if (course == null) {
                 System.out.println("Error: Course with ID " + courseId + " does not exist.");
+            }else {
+                System.out.println("Student not found in this course.");
             }
         }
     }
 
     public  void displayAllStudents() {
-//        System.out.println(studentMap);
         if (studentMap.isEmpty()) {
             System.out.println("No students available.");
             return;
@@ -71,20 +76,20 @@ public class CourseEnrollment {
 
         System.out.println("* * * List of All Students * * *");
         for (Student student : studentMap.values()) {
-            System.out.println(student);
+            System.out.println(student.toString());
         }
     }
 
     public  void displayAllCourses() {
-        System.out.println(courseMap);
+//        System.out.println(courseMap);
         if (courseMap.isEmpty()) {
             System.out.println("No courses available.");
             return;
         }
 
         System.out.println("\"* * * List of All Courses * * *\"");
-        for (Student student : studentMap.values()) {
-            System.out.println(student);
+        for (Course course : courseMap.values()) {
+            System.out.println(course.toString());
         }
     }
 
