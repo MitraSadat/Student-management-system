@@ -14,12 +14,12 @@ public class CourseEnrollment {
 
     public void addStudent(Student std){
         listOfStudents.add(std);
-        studentMap.put(std.id, std);
+        studentMap.put(std.getId(), std);
     }
 
     public void addCourse(Course crs){
         listOfCourses.add(crs);
-        courseMap.put(crs.courseId, crs);
+        courseMap.put(crs.getCourseId(), crs);
     }
 
 
@@ -29,8 +29,12 @@ public class CourseEnrollment {
         Course course = courseMap.get(courseId);
 
         if (student != null && course != null) {
-            student.enrollmentCourses.add(course);
-            System.out.println("Successfully enrolled " + student.name + " in " + course.courseName);
+            if (student.getEnrollmentCourses().contains(course)){
+                System.out.println( student.getName() + " is already enrolled in " + course.getCourseName());
+            }else {
+                student.getEnrollmentCourses().add(course);
+                System.out.println("Successfully enrolled " + student.getName() + " in " + course.getCourseName());
+                }
         } else {
             if (student == null) {
                 System.out.println("Error: Student with ID " + studentId + " does not exist.");
@@ -44,26 +48,23 @@ public class CourseEnrollment {
 
     public void removeStudentFromCourse(int studentId, int courseId) {
 
-        System.out.println("Method called");
-
         Student student = studentMap.get(studentId);
-        System.out.println(student);
         Course course = courseMap.get(courseId);
-        System.out.println(course);
 
         if (student != null && course != null) {
             if (listOfStudents.remove(student)) {
-                student.enrollmentCourses.remove(course);
-                System.out.println("Successfully removed " + student.name + " from " + course.courseName);
-            }
+                student.getEnrollmentCourses().remove(course);
+                System.out.println("Successfully removed " + student.getName() + " from " + course.getCourseName());
+            }else {
+                    System.out.println("Student not found in this course.");
+                }
+
         } else {
             if (student == null) {
                 System.out.println("Error: Student with ID " + studentId + " does not exist.");
             }
             if (course == null) {
                 System.out.println("Error: Course with ID " + courseId + " does not exist.");
-            }else {
-                System.out.println("Student not found in this course.");
             }
         }
     }

@@ -4,8 +4,8 @@ public class GraduateStudent extends Student{
 
     String graduateDate;
 
-    GraduateStudent(int id, String name, String email, long phoneNumber, String graduateDate) {
-        super(id, name, email, phoneNumber);
+    GraduateStudent(int id, String name, String email, long phoneNumber, boolean isGraduate, String graduateDate) {
+        super(id, name, email, phoneNumber, isGraduate );
         this.graduateDate = graduateDate;
 
     }

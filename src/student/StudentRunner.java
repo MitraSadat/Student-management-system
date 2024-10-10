@@ -1,8 +1,6 @@
 package student;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,10 +9,9 @@ public class StudentRunner {
 
     static Scanner input = new Scanner(System.in);
     static CourseEnrollment enrollmentObj = new CourseEnrollment();
+    static String fileName = "student.txt";
 
     public static void main(String[] args) {
-
-        String fileName = "student.txt";
 
         int choice;
 
@@ -79,6 +76,10 @@ public class StudentRunner {
 
     public static void addStudent(){
 
+        String major = "";
+        String graduationDate = "";
+        Student student;
+
         System.out.print("Enter Student Id: ");
         int id = input.nextInt();
         System.out.print("Enter Student Name: ");
@@ -87,16 +88,29 @@ public class StudentRunner {
         String email = input.next();
         System.out.print("Enter Student Phone Number: ");
         long phoneNumber = input.nextLong();
-        System.out.print("Enter Student Major: ");
-        String major = input.next();
-
-        Student student = new UndergraduateStudent(id, name, email, phoneNumber, major);
+        System.out.print("Is Student Graduated? ");
+        boolean isGraduate = stringToBoolean(input.next());
+        if (isGraduate) {
+            System.out.print("Enter Student Graduation Date: ");
+            graduationDate = input.next();
+            student = new GraduateStudent(id, name, email, phoneNumber, isGraduate, graduationDate);
+        }else{
+            System.out.print("Enter Student Major: ");
+            major = input.next();
+            student = new UndergraduateStudent(id, name, email, phoneNumber, isGraduate, major);
+        }
         enrollmentObj.addStudent(student);
         System.out.println("Student added successfully.");
+        writeStudentInfoInFile(fileName);
+    }
 
+    public static boolean stringToBoolean(String str) {
+        return str != null && str.equalsIgnoreCase("yes");
     }
 
     public static void addCourse(){
+
+        Course course;
 
         System.out.print("Enter Course Id: ");
         int id = input.nextInt();
@@ -106,10 +120,16 @@ public class StudentRunner {
         double credit = input.nextDouble();
         System.out.print("Enter Course Grade: ");
         char grade = input.next().charAt(0);
-
-        Course course = new MandatoryCourse(id, name, credit, grade);
+        System.out.println("Is a Mandatory Course? ");
+        boolean isMandatoryCoursee = stringToBoolean(input.next());
+        if (isMandatoryCoursee) {
+            course = new MandatoryCourse(id, name, credit, grade, isMandatoryCoursee);
+        }else{
+            course = new ElectiveCourse(id, name, credit, grade, isMandatoryCoursee);
+        }
         enrollmentObj.addCourse(course);
         System.out.println("Course added successfully.");
+        writeStudentInfoInFile(fileName);
 
     }
 
@@ -160,21 +180,19 @@ public class StudentRunner {
             for (Course course : enrollmentObj.courseMap.values()) {
                 writer.write(course.toString() + "\n");
             }
-            System.out.println("Done");
             writer.close();
 
         }catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
     public static List<Student> searchStudentsById() {
-        System.out.println("Enter Student Id: ");
+        System.out.print("Enter Student Id: ");
         int id = input.nextInt();
         List<Student> foundStudents = new ArrayList<>();
         for (Student student : enrollmentObj.studentMap.values()) {
-            if (student.id == id) {
+            if (student.getId() == id) {
                 foundStudents.add(student);
             }
         }
@@ -183,11 +201,11 @@ public class StudentRunner {
     }
 
     public static List<Course> searchCoursesById() {
-        System.out.println("Enter Course Id: ");
+        System.out.print("Enter Course Id: ");
         int id = input.nextInt();
         List<Course> foundCourses = new ArrayList<>();
         for (Course course : enrollmentObj.courseMap.values()) {
-            if (course.courseId == id) {
+            if (course.getCourseId() == id) {
                 foundCourses.add(course);
             }
         }
