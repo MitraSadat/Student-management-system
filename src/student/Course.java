@@ -4,7 +4,7 @@ package student;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Course {
+public abstract class Course {
 
     private int courseId;
     private String courseName;

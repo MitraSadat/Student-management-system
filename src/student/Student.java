@@ -3,7 +3,7 @@ package student;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student {
+public abstract class Student {
 
     private int id;
     private String name;

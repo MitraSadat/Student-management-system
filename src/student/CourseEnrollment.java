@@ -82,7 +82,6 @@ public class CourseEnrollment {
     }
 
     public  void displayAllCourses() {
-//        System.out.println(courseMap);
         if (courseMap.isEmpty()) {
             System.out.println("No courses available.");
             return;
