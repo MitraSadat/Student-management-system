@@ -44,12 +44,8 @@ public class CourseEnrollment {
 
     public void removeStudentFromCourse(int studentId, int courseId) {
 
-        System.out.println("Method called");
-
         Student student = studentMap.get(studentId);
-        System.out.println(student);
         Course course = courseMap.get(courseId);
-        System.out.println(course);
 
         if (student != null && course != null) {
             if (listOfStudents.remove(student)) {

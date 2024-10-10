@@ -170,7 +170,7 @@ public class StudentRunner {
     }
 
     public static List<Student> searchStudentsById() {
-        System.out.println("Enter Student Id: ");
+        System.out.print("Enter Student Id: ");
         int id = input.nextInt();
         List<Student> foundStudents = new ArrayList<>();
         for (Student student : enrollmentObj.studentMap.values()) {
@@ -183,7 +183,7 @@ public class StudentRunner {
     }
 
     public static List<Course> searchCoursesById() {
-        System.out.println("Enter Course Id: ");
+        System.out.print("Enter Course Id: ");
         int id = input.nextInt();
         List<Course> foundCourses = new ArrayList<>();
         for (Course course : enrollmentObj.courseMap.values()) {
